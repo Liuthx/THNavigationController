@@ -1,0 +1,2 @@
+# THNavigationController
+相对独立的navigationBar
