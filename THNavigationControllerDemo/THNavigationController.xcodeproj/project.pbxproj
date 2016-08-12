@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		0A3DFBBD1CDC33FF00A66C25 /* KCategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A3DFBBC1CDC33FF00A66C25 /* KCategory.m */; };
+		0AA287401D5D9E1D00759B6C /* THNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0AA2873F1D5D9E1D00759B6C /* THNavigationController.m */; };
 		0ACA9F2B1CDB4EA300259858 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA9F2A1CDB4EA300259858 /* main.m */; };
 		0ACA9F2E1CDB4EA300259858 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA9F2D1CDB4EA300259858 /* AppDelegate.m */; };
 		0ACA9F311CDB4EA300259858 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA9F301CDB4EA300259858 /* ViewController.m */; };
@@ -15,7 +16,6 @@
 		0ACA9F391CDB4EA300259858 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0ACA9F371CDB4EA300259858 /* LaunchScreen.storyboard */; };
 		0ACA9F441CDB4EA400259858 /* THNavigationControllerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA9F431CDB4EA400259858 /* THNavigationControllerTests.m */; };
 		0ACA9F4F1CDB4EA400259858 /* THNavigationControllerUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA9F4E1CDB4EA400259858 /* THNavigationControllerUITests.m */; };
-		0ACA9F5F1CDB4F0600259858 /* THNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0ACA9F5E1CDB4F0600259858 /* THNavigationController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +38,8 @@
 /* Begin PBXFileReference section */
 		0A3DFBBB1CDC33FF00A66C25 /* KCategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KCategory.h; sourceTree = "<group>"; };
 		0A3DFBBC1CDC33FF00A66C25 /* KCategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KCategory.m; sourceTree = "<group>"; };
+		0AA2873E1D5D9E1D00759B6C /* THNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THNavigationController.h; sourceTree = "<group>"; };
+		0AA2873F1D5D9E1D00759B6C /* THNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THNavigationController.m; sourceTree = "<group>"; };
 		0ACA9F261CDB4EA300259858 /* THNavigationController.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = THNavigationController.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ACA9F2A1CDB4EA300259858 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0ACA9F2C1CDB4EA300259858 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -53,8 +55,6 @@
 		0ACA9F4A1CDB4EA400259858 /* THNavigationControllerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = THNavigationControllerUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0ACA9F4E1CDB4EA400259858 /* THNavigationControllerUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = THNavigationControllerUITests.m; sourceTree = "<group>"; };
 		0ACA9F501CDB4EA400259858 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		0ACA9F5D1CDB4F0600259858 /* THNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = THNavigationController.h; sourceTree = "<group>"; };
-		0ACA9F5E1CDB4F0600259858 /* THNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = THNavigationController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,8 +149,8 @@
 		0ACA9F5C1CDB4EF700259858 /* classes */ = {
 			isa = PBXGroup;
 			children = (
-				0ACA9F5D1CDB4F0600259858 /* THNavigationController.h */,
-				0ACA9F5E1CDB4F0600259858 /* THNavigationController.m */,
+				0AA2873E1D5D9E1D00759B6C /* THNavigationController.h */,
+				0AA2873F1D5D9E1D00759B6C /* THNavigationController.m */,
 			);
 			path = classes;
 			sourceTree = "<group>";
@@ -288,7 +288,7 @@
 				0ACA9F2E1CDB4EA300259858 /* AppDelegate.m in Sources */,
 				0ACA9F2B1CDB4EA300259858 /* main.m in Sources */,
 				0A3DFBBD1CDC33FF00A66C25 /* KCategory.m in Sources */,
-				0ACA9F5F1CDB4F0600259858 /* THNavigationController.m in Sources */,
+				0AA287401D5D9E1D00759B6C /* THNavigationController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

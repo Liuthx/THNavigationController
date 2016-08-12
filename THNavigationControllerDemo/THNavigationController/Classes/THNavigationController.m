@@ -2,7 +2,7 @@
 //  THNavigationController.m
 //  THNavigationController
 //
-//  Created by k on 16/5/5.
+//  Created by k on 16/1/5.
 //  Copyright © 2016年 k. All rights reserved.
 //
 
@@ -10,6 +10,14 @@
 #import <objc/runtime.h>
 
 #pragma mark - THWrapNavigationController
+
+@interface THWrapViewController : UIViewController
+
+@property (nonatomic, strong, readonly) UIViewController *rootViewController;
+
++ (THWrapViewController *)wrapViewControllerWithViewController:(UIViewController *)viewController;
+
+@end
 
 @interface THWrapNavigationController : UINavigationController
 
@@ -34,7 +42,10 @@
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
-    
+    if (!self.viewControllers.count) {
+        [super pushViewController:viewController animated:animated];
+        return;
+    }
     viewController.th_navigationController = (THNavigationController *)self.navigationController;
     viewController.th_fullScreenPopGestureEnabled = viewController.th_navigationController.fullScreenPopGestureEnabled;
     
@@ -43,7 +54,7 @@
     if (!backButtonImage) {
         
         CGFloat scale = [UIScreen mainScreen].scale;
-        CGFloat width = 44;
+        CGFloat width = 20;
         CGFloat height = 44;
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
         CGContextRef context = CGBitmapContextCreate(NULL, width*scale, height*scale, 8, 4 * width*scale, colorSpace, kCGImageAlphaPremultipliedLast);
@@ -93,12 +104,13 @@ static NSValue *th_tabBarRectValue;
 
 + (THWrapViewController *)wrapViewControllerWithViewController:(UIViewController *)viewController {
     
-    THWrapNavigationController *wrapNavController = [[THWrapNavigationController alloc] init];
-    wrapNavController.viewControllers = @[viewController];
+    THWrapNavigationController *wrapNavController = [[THWrapNavigationController alloc] initWithRootViewController:viewController];
     
     THWrapViewController *wrapViewController = [[THWrapViewController alloc] init];
-    [wrapViewController.view addSubview:wrapNavController.view];
+    
     [wrapViewController addChildViewController:wrapNavController];
+    [wrapViewController.view addSubview:wrapNavController.view];
+    
     
     return wrapViewController;
 }
@@ -127,6 +139,11 @@ static NSValue *th_tabBarRectValue;
         self.tabBarController.tabBar.frame = th_tabBarRectValue.CGRectValue;
     }
 }
+
+- (BOOL)th_forbidPopGesture {
+    return [self rootViewController].th_forbidPopGesture;
+}
+
 
 - (BOOL)th_fullScreenPopGestureEnabled {
     return [self rootViewController].th_fullScreenPopGestureEnabled;
@@ -172,11 +189,12 @@ static NSValue *th_tabBarRectValue;
 @implementation THNavigationController
 
 - (instancetype)initWithRootViewController:(UIViewController *)rootViewController {
-    if (self = [super init]) {
+    if (self = [super initWithRootViewController:rootViewController]) {
         rootViewController.th_navigationController = self;
         self.viewControllers = @[[THWrapViewController wrapViewControllerWithViewController:rootViewController]];
     }
     return self;
+    
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder {
@@ -207,6 +225,13 @@ static NSValue *th_tabBarRectValue;
     
     BOOL isRootVC = viewController == navigationController.viewControllers.firstObject;
     
+    if (viewController.th_forbidPopGesture) {
+        viewController.th_fullScreenPopGestureEnabled = NO;
+        self.interactivePopGestureRecognizer.enabled = NO;
+        [self.view removeGestureRecognizer:self.popPanGesture];
+        return;
+    }
+    
     if (viewController.th_fullScreenPopGestureEnabled) {
         if (isRootVC) {
             [self.view removeGestureRecognizer:self.popPanGesture];
@@ -220,7 +245,6 @@ static NSValue *th_tabBarRectValue;
         self.interactivePopGestureRecognizer.delegate = self;
         self.interactivePopGestureRecognizer.enabled = !isRootVC;
     }
-    
 }
 
 #pragma mark - UIGestureRecognizerDelegate
@@ -233,7 +257,6 @@ static NSValue *th_tabBarRectValue;
     return [gestureRecognizer isKindOfClass:UIScreenEdgePanGestureRecognizer.class];
 }
 
-#pragma mark - Getter
 
 - (NSArray *)th_viewControllers {
     NSMutableArray *viewControllers = [NSMutableArray array];
@@ -249,6 +272,14 @@ static NSValue *th_tabBarRectValue;
 
 
 @implementation UIViewController (THNavigationExtension)
+
+- (BOOL)th_forbidPopGesture {
+    return [objc_getAssociatedObject(self, _cmd) boolValue];
+}
+
+- (void)setTh_forbidPopGesture:(BOOL)th_forbidPopGesture {
+    objc_setAssociatedObject(self, @selector(th_forbidPopGesture), @(th_forbidPopGesture), OBJC_ASSOCIATION_RETAIN);
+}
 
 - (BOOL)th_fullScreenPopGestureEnabled {
     return [objc_getAssociatedObject(self, _cmd) boolValue];
