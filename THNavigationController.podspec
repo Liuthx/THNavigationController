@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "THNavigationController"
-  s.version      = "1.0.2"
+  s.version      = "1.1.0"
   s.summary      = "相对独立的navigationBar."
 
   # This description is used to generate tags and improve search results.
