@@ -52,32 +52,46 @@
     UIImage *backButtonImage = viewController.th_navigationController.backButtonImage;
     
     if (!backButtonImage) {
-        
-        CGFloat scale = [UIScreen mainScreen].scale;
-        CGFloat width = 20;
-        CGFloat height = 44;
+               CGFloat scale = [UIScreen mainScreen].scale;
+        CGFloat width = 10;
+        CGFloat height = 18;
         CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
         CGContextRef context = CGBitmapContextCreate(NULL, width*scale, height*scale, 8, 4 * width*scale, colorSpace, kCGImageAlphaPremultipliedLast);
-        
-        CGContextSetLineWidth(context, scale);
+
+        CGContextSetLineWidth(context, scale * 1.5);
         CGContextScaleCTM(context, 1, 1);
-        
+
         CGPoint aPoints[3];
-        aPoints[0] =CGPointMake(12*scale, 10*scale);
-        aPoints[1] =CGPointMake(1, 21*scale);
-        aPoints[2] =CGPointMake(12*scale, 32*scale);
-        
+        aPoints[0] =CGPointMake(10*scale, 0*scale);
+        aPoints[1] =CGPointMake(1, 9*scale);
+        aPoints[2] =CGPointMake(10*scale, 18*scale);
+
         CGContextAddLines(context, aPoints, 3);
         CGContextDrawPath(context, kCGPathStroke);
-        
+
         CGImageRef imageMasked = CGBitmapContextCreateImage(context);
         CGContextRelease(context);
         CGColorSpaceRelease(colorSpace);
-        
+
         UIImage *image = [UIImage imageWithCGImage:imageMasked scale:scale orientation:UIImageOrientationUp];
         CGImageRelease(imageMasked);
         backButtonImage = image;
-        
+
+
+        UIImage * icBackImage = image;
+        UIView *backView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+        UIImageView *backImageView = [[UIImageView alloc] initWithImage:icBackImage];
+        backImageView.frame = CGRectMake(0, 6, 10, 18);
+        [backView addSubview:backImageView];
+
+        UIImage *imageRet = [[UIImage alloc]init];
+        //UIGraphicsBeginImageContextWithOptions(区域大小, 是否是非透明的, 屏幕密度);
+        UIGraphicsBeginImageContextWithOptions(backView.frame.size, NO, [UIScreen mainScreen].scale);
+        [backView.layer renderInContext:UIGraphicsGetCurrentContext()];
+        imageRet = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
+
+        backButtonImage = imageRet; 
     }
     
     viewController.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithImage:backButtonImage style:UIBarButtonItemStylePlain target:self action:@selector(didTapBackButton)];
